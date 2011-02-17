@@ -1,0 +1,30 @@
+#! /usr/bin/env ruby
+
+require 'rubygems'
+require 'git'
+require 'pp'
+
+if ARGV[0]
+  path = ARGV[0]
+else
+  path = ""
+end
+git_list = Dir.entries(path).select{|f| File.directory?(path+f) && !(f =~ /\A\.+\z/)}
+
+
+git_list.each_with_index do |git_folder, i|
+  print "#{i+1}) "
+  begin
+    g = Git.open(path+git_folder)
+    puts "#{git_folder}:"
+    if g.remotes.length > 0
+      puts "  - Remotes:"
+      g.remotes.each_with_index do |remote, j|
+        puts "     #{j+1}. #{remote.name} => #{remote.url}"
+      end
+    end
+    puts "\n"
+  rescue
+    puts "#{git_folder} - NOT A REPOSITORY\n\n"
+  end
+end
