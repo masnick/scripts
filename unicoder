@@ -1,0 +1,12 @@
+#! /usr/bin/env ruby
+
+def str_escape(str)
+    str.unpack("U*").to_a.map{|a| a.to_s(16)}.map{|s| "\\u#{(4-s.length).times.to_a.map{|a| "0"}.join("")+s}"}.join("")
+end
+
+
+f = IO.read(ARGV[0])
+
+f.split(/\n/).each do |line|
+  puts str_escape(line)
+end
