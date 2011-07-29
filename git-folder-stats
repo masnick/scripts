@@ -7,7 +7,7 @@ require 'pp'
 if ARGV[0]
   path = ARGV[0]
 else
-  path = Dir.pwd
+  path = ""
 end
 
 # Check for trailing slash
